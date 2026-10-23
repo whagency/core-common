@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "grpc/pb/userv1;userv1";
+
+enum ContactType {
+  CONTACT_TYPE_EMAIL = 0;
+  CONTACT_TYPE_PHONE = 1;
+}
+
+service UserService {
+  rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
+  rpc GetUserByNumber (GetUserByNumberRequest) returns (GetUserByNumberResponse);
+  rpc ValidateSession(ValidateSessionRequest) returns (ValidateSessionResponse);
+}
+
+message GetProfileRequest {
+  uint64 user_id = 1;
+}
+
+message GetProfileResponse {
+  string locale = 1;
+  ContactType contact_type = 2;
+  string contact_value = 3;
+}
+
+message GetUserByNumberRequest {
+  uint64 number = 1;
+}
+
+message GetUserByNumberResponse {
+  uint64 user_id = 1;
+  uint64 number = 2;
+  string status = 3;
+  string verification_level = 4;
+  bool verification_level_max = 5;
+}
+
+message ValidateSessionRequest {
+  string token = 1;
+  bool is_expired_validation_skip = 2;
+}
+
+message ValidateSessionResponse {
+  string session_id = 1;
+  ValidateSessionUser user = 2;
+}
+
+message ValidateSessionUser {
+  uint64 id = 1;
+  string verification_level = 2;
+  string country = 3;
+  optional string timezone = 4;
+  optional string locale = 5;
+  string status = 6;
+}

@@ -1,0 +1,29 @@
+name: Vulnerable Check
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  vulnerable-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Run govulncheck
+        env:
+          GOFLAGS: -mod=mod
+        run: |
+          go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...

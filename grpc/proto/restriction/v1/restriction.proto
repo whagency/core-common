@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package restriction.v1;
+
+option go_package = "grpc/pb/restrictionv1;restrictionv1";
+
+service RestrictionService {
+  rpc SetRequiredVerification (SetRequiredVerificationRequest) returns (SetRequiredVerificationResponse);
+  rpc CheckLimit (CheckLimitRequest) returns (CheckLimitResponse);
+  rpc CheckGeo (CheckGeoRequest) returns (CheckGeoResponse);
+  rpc UpdateCounters (UpdateCountersRequest) returns (UpdateCountersResponse);
+}
+
+enum OperationType {
+  OPERATION_TYPE_UNSPECIFIED = 0;
+  OPERATION_TYPE_DEPOSIT = 1;
+  OPERATION_TYPE_WITHDRAWAL = 2;
+  OPERATION_TYPE_SWAP = 3;
+  OPERATION_TYPE_TRANSFER = 4;
+  OPERATION_TYPE_CHECKOUT_PAYMENT = 5;
+}
+
+enum GeoFilterOperationType {
+  GEO_FILTER_OPERATION_TYPE_UNSPECIFIED = 0;
+  GEO_FILTER_OPERATION_TYPE_REGISTRATION = 1;
+  GEO_FILTER_OPERATION_TYPE_DEPOSIT = 2;
+  GEO_FILTER_OPERATION_TYPE_WITHDRAWAL = 3;
+  GEO_FILTER_OPERATION_TYPE_SWAP = 4;
+  GEO_FILTER_OPERATION_TYPE_TRANSFER = 5;
+  GEO_FILTER_OPERATION_TYPE_CHECKOUT_PAYMENT = 6;
+}
+
+message SetRequiredVerificationRequest {
+  uint64 user_id = 1;
+  bool active = 2;
+}
+
+message SetRequiredVerificationResponse {}
+
+message CheckLimitRequest {
+  uint64 user_id = 1;
+  OperationType operation_type = 2;
+  string amount = 3;
+  string asset_code = 4;
+  optional string country = 5;
+}
+
+message CheckLimitResponse {
+  string decision = 1;
+  optional string reason_code = 2;
+}
+
+message CheckGeoRequest {
+  string country = 1;
+  GeoFilterOperationType operation_type = 2;
+}
+
+message CheckGeoResponse {
+  bool is_allow = 1;
+}
+
+message UpdateCountersRequest {
+  uint64 user_id = 1;
+  string asset_code = 2;
+  OperationType operation_type = 3;
+  string amount = 4;
+  optional string occurred_at = 5;
+  bool is_reverse = 6;
+  optional string idempotency_key = 7;
+}
+
+message UpdateCountersResponse {}

@@ -1,0 +1,26 @@
+package errorsx
+
+const (
+	InvalidRequestErrMessage          = "bad request, see logs for more details."
+	InternalServerErrMessage          = "internal error, see logs for more details."
+	DatabaseErrMessage                = "error in database, see logs for more details."
+	BodyBadFormatErrMessage           = "body request format is not valid."
+	QueryParamsBadFormatErrMessage    = "query params request format is not valid."
+	URLParamsBadFormatErrMessage      = "url params request format is not valid."
+	RequestTimeoutErrMessage          = "request timeout in third party service."
+	AccessForbiddenErrMessage         = "access forbidden, invalid security token."
+	RecordNotFoundErrMessage          = "record not found."
+	RecordAlreadyExistsErrMessage     = "record already exists."
+	CacheErrMessage                   = "error in cache, see logs for more details."
+	ValidationErrMessage              = "data validation error."
+	RouteNotFoundErrMessage           = "route not found."
+	ConcurrencyConflictErrMessage     = "concurrency conflict."
+	ExternalServiceErrMessage         = "external service error, see logs for more details."
+	UserSessionTokenInvalidErrMessage = "user session token is invalid."
+	UserSessionExpiredErrMessage      = "user session has expired."
+	RestrictedOperationErrMessage     = "operation is restricted for this account."
+	RateLimitExceededErrMessage       = "rate limit exceeded, please try again later."
+	NoContentErrMessage               = "no content to return."
+	InsufficientFundsErrorMessage     = "insufficient funds for this operation."
+	QueuePublishErrorMessage          = "error publishing message to queue"
+)
